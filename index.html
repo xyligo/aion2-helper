@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="aether">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aion 2 Helper — Crafting Calculator, Enchantment & Gathering Timers</title>
+  <meta name="description" content="The ultimate companion tool for Aion 2. Master crafting recipes, multi-tier bill of materials, gear enchantment simulator, manastone socketing, and essence extraction timers.">
+  <meta name="keywords" content="Aion 2, Aion, crafting calculator, bill of materials, enchantment simulator, essence extraction, manastones, MMORPG helper">
+  
+  <!-- Open Graph / Meta -->
+  <meta property="og:title" content="Aion 2 Helper — Crafting & Progression Tools">
+  <meta property="og:description" content="Master crafting recipes, gear enchantment simulator, BOM calculator, and gathering timers for Aion 2.">
+  <meta property="og:image" content="./assets/images/hero-banner.jpg">
+  <meta property="og:type" content="website">
+
+  <!-- Favicon / Icon -->
+  <link rel="icon" type="image/jpeg" href="./assets/images/emblem.jpg">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Top Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <a href="#crafting" class="logo-group">
+        <img src="./assets/images/emblem.jpg" alt="Aion 2 Logo" class="logo-img">
+        <div class="logo-text-box">
+          <h1 class="cinzel">AION 2 HELPER</h1>
+          <span class="logo-subtitle">Workshop of Atreia</span>
+        </div>
+      </a>
+
+      <!-- Primary Nav Tabs -->
+      <nav class="primary-nav" id="primary-nav">
+        <a href="#crafting" class="nav-link active" data-tab="crafting">
+          <span>⚒️</span> Crafting & BOM
+        </a>
+        <a href="#enchantment" class="nav-link" data-tab="enchantment">
+          <span>✨</span> Enchantment
+        </a>
+        <a href="#manastones" class="nav-link" data-tab="manastones">
+          <span>💎</span> Manastones
+        </a>
+        <a href="#timers" class="nav-link" data-tab="timers">
+          <span>⏱️</span> Timers & Nodes
+        </a>
+        <a href="#guide" class="nav-link" data-tab="guide">
+          <span>📖</span> Crafting Guide
+        </a>
+      </nav>
+
+      <!-- Right Header Actions -->
+      <div class="header-actions">
+        <!-- Live UTC Clock -->
+        <div class="utc-clock-badge font-mono" id="header-utc-clock">
+          00:00:00 UTC
+        </div>
+
+        <!-- Faction Theme Switcher -->
+        <div class="faction-picker" title="Switch Faction Theme">
+          <button class="faction-btn active" data-faction="aether" title="Aether Void Theme">
+            <span>💠</span> Aether
+          </button>
+          <button class="faction-btn" data-faction="elyos" title="Elyos Amber Theme">
+            <span>☀️</span> Elyos
+          </button>
+          <button class="faction-btn" data-faction="asmodian" title="Asmodian Twilight Theme">
+            <span>🌙</span> Asmodian
+          </button>
+        </div>
+
+        <!-- Audio Toggle Button -->
+        <button id="audio-toggle-btn" class="icon-btn" title="Toggle Sound Effects">
+          <span class="icon">🔊</span>
+          <span class="btn-text">Audio</span>
+        </button>
+
+        <!-- Mobile Menu Toggle -->
+        <button id="mobile-menu-btn" class="mobile-menu-btn" aria-label="Toggle Navigation">
+          ☰
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Cinematic Banner -->
+  <section class="hero-banner">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-badge">
+        <span>✦</span> Next-Gen MMORPG Progression Companion
+      </div>
+      <h2 class="hero-title cinzel">
+        Forge Your Legacy in <span>Atreia</span>
+      </h2>
+      <p class="hero-desc">
+        Calculate complex multi-tier crafting costs, simulate RNG critical procs (Noble gear), master gear enchantment probabilities with Monte Carlo simulations, and track Essence Extraction respawn timers.
+      </p>
+
+      <div class="hero-stats-row">
+        <div class="hero-stat-pill">
+          <span class="stat-icon">⚒️</span>
+          <div>
+            <span class="stat-num">5 Professions</span>
+            <span class="stat-sub">Novice & Professional</span>
+          </div>
+        </div>
+        <div class="hero-stat-pill">
+          <span class="stat-icon">📊</span>
+          <div>
+            <span class="stat-num">Multi-Tier BOM</span>
+            <span class="stat-sub">Recursive Raw Breakdown</span>
+          </div>
+        </div>
+        <div class="hero-stat-pill">
+          <span class="stat-icon">🎲</span>
+          <div>
+            <span class="stat-num">Monte Carlo</span>
+            <span class="stat-sub">500-Daeva Gear Sim</span>
+          </div>
+        </div>
+        <div class="hero-stat-pill">
+          <span class="stat-icon">⏱️</span>
+          <div>
+            <span class="stat-num">Live Resets</span>
+            <span class="stat-sub">Rifts & Boss Timers</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- ==========================================
+         SECTION 1: CRAFTING & BOM CALCULATOR
+         ========================================== -->
+    <section id="section-crafting" class="app-section active">
+      <div class="section-header">
+        <div>
+          <h2>Crafting & Bill of Materials Calculator</h2>
+          <p class="section-subtitle">Select a recipe to calculate required raw materials, profit margins, and test RNG critical procs.</p>
+        </div>
+        <div class="header-btns">
+          <button id="open-add-recipe-btn" class="btn btn-secondary">
+            <span>➕</span> Add Custom Recipe
+          </button>
+          <button id="open-data-modal-btn" class="btn btn-outline">
+            <span>💾</span> Backup / Import
+          </button>
+        </div>
+      </div>
+
+      <!-- Profession Filter Tabs -->
+      <div class="profession-bar">
+        <button class="prof-tab active" data-prof="all">
+          <span>🌐</span> All Professions
+        </button>
+        <button class="prof-tab" data-prof="blacksmithing">
+          <span>⚔️</span> Blacksmithing
+        </button>
+        <button class="prof-tab" data-prof="armorsmithing">
+          <span>🛡️</span> Armorsmithing
+        </button>
+        <button class="prof-tab" data-prof="handicrafting">
+          <span>💍</span> Handicrafting
+        </button>
+        <button class="prof-tab" data-prof="alchemy">
+          <span>🧪</span> Alchemy
+        </button>
+        <button class="prof-tab" data-prof="cooking">
+          <span>🍲</span> Cooking
+        </button>
+      </div>
+
+      <div class="crafting-layout">
+        <!-- Left Column: Search & Recipe Directory -->
+        <aside class="recipe-sidebar">
+          <div class="recipe-filter-box">
+            <div class="search-input-wrapper">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="craft-search-input" class="search-input" placeholder="Search recipe or material..." />
+            </div>
+            <div class="filter-row">
+              <select id="craft-rank-filter" class="filter-select">
+                <option value="all">All Ranks</option>
+                <option value="novice">Novice (Lv. 1-50)</option>
+                <option value="professional">Professional (Lv. 51-100)</option>
+              </select>
+              <select id="craft-tier-filter" class="filter-select">
+                <option value="all">All Tiers</option>
+                <option value="common">Common (White)</option>
+                <option value="superior">Superior (Green)</option>
+                <option value="heroic">Heroic (Blue)</option>
+                <option value="fabled">Fabled (Gold)</option>
+                <option value="eternal">Eternal (Purple)</option>
+                <option value="mythic">Mythic (Pink)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Recipe List Cards -->
+          <div id="recipe-list-container" class="recipe-list-container">
+            <!-- Dynamically populated by JS -->
+          </div>
+        </aside>
+
+        <!-- Right Column: Recipe Details & Calculator -->
+        <div class="recipe-detail-panel">
+          
+          <!-- Selected Recipe Summary Card -->
+          <div class="card-panel">
+            <div class="selected-recipe-header">
+              <div class="sel-header-main">
+                <div class="sel-recipe-icon-box" id="sel-recipe-icon">⚔️</div>
+                <div class="sel-recipe-title-box">
+                  <h3 id="sel-recipe-name">Greatsword of the Radiant Guardian</h3>
+                  <div class="sel-recipe-tags">
+                    <span id="sel-recipe-tier" class="tier-pill tier-eternal">ETERNAL</span>
+                    <span id="sel-recipe-rank" class="rank-pill">PROFESSIONAL LV. 85</span>
+                    <span id="sel-recipe-proc-rate" class="proc-rate-badge">28.0% Proc Chance</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p id="sel-recipe-desc" class="sel-recipe-desc">
+              A colossal blade forged from purified orichalcum and infused with pure aether core. Grants immense physical critical strike and attack speed.
+            </p>
+
+            <!-- Craft Quantity & Player Proficiency Controls -->
+            <div class="craft-controls-grid">
+              <div class="ctrl-group">
+                <span class="ctrl-label">Craft Quantity Multiplier</span>
+                <div class="qty-stepper">
+                  <button id="craft-qty-dec" class="stepper-btn">-</button>
+                  <input type="number" id="craft-qty-input" class="qty-input" value="1" min="1" max="999" />
+                  <button id="craft-qty-inc" class="stepper-btn">+</button>
+                </div>
+                <div class="qty-presets-row">
+                  <button class="qty-preset" data-qty="1">1x</button>
+                  <button class="qty-preset" data-qty="5">5x</button>
+                  <button class="qty-preset" data-qty="10">10x</button>
+                  <button class="qty-preset" data-qty="50">50x</button>
+                  <button class="qty-preset" data-qty="100">100x</button>
+                </div>
+              </div>
+
+              <div class="ctrl-group">
+                <span class="ctrl-label">
+                  Player Proficiency Level
+                  <strong id="player-prof-value" class="text-accent">Lv. 80</strong>
+                </span>
+                <div class="prof-slider-wrapper">
+                  <input type="range" id="player-prof-slider" class="slider-input" min="1" max="100" value="80" />
+                </div>
+                <span class="stat-sub">Higher proficiency vs recipe level boosts Critical Proc rate!</span>
+              </div>
+
+              <div class="ctrl-group">
+                <span class="ctrl-label">Broker Commission Fee</span>
+                <div class="price-input-wrapper">
+                  <input type="number" id="broker-tax-input" class="mat-price-input" value="3.0" min="0" max="20" step="0.5" />
+                  <span class="currency">% Tax</span>
+                </div>
+                <span class="stat-sub">Default 3% auction broker fee.</span>
+              </div>
+            </div>
+
+            <!-- Critical Proc Outcome Card -->
+            <div id="recipe-proc-card" class="proc-outcome-card">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Bill of Materials (BOM) Table -->
+          <div class="card-panel">
+            <div class="bom-header-bar">
+              <div>
+                <h3>Bill of Materials (BOM)</h3>
+                <p class="section-subtitle">Check items you already have. Edit unit prices to calculate exact market costs.</p>
+              </div>
+              <div class="view-mode-toggle">
+                <button id="bom-mode-direct" class="mode-toggle-btn active">Direct Ingredients</button>
+                <button id="bom-mode-raw" class="mode-toggle-btn">Decomposed (Raw Essence)</button>
+              </div>
+            </div>
+
+            <div class="bom-table-wrapper">
+              <table class="bom-table">
+                <thead>
+                  <tr>
+                    <th style="width: 40px;">Have</th>
+                    <th>Material Name & Source</th>
+                    <th style="width: 90px;">Quantity</th>
+                    <th style="width: 140px;">Unit Price</th>
+                    <th style="width: 150px;">Subtotal</th>
+                  </tr>
+                </thead>
+                <tbody id="bom-table-body">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+
+            <div style="margin-top: 1rem; text-align: right;">
+              <button id="reset-prices-btn" class="btn btn-outline" style="font-size: 0.8rem;">
+                ↺ Reset All Prices to Default
+              </button>
+            </div>
+          </div>
+
+          <!-- Economic & Broker Profit Panel -->
+          <div class="card-panel">
+            <h3>Economic & Market Profit Analysis</h3>
+            <p class="section-subtitle">Real-time profitability weighted by critical proc chances and broker commission.</p>
+
+            <div class="economic-grid">
+              <div class="stat-card">
+                <span class="stat-label">Total Material Cost</span>
+                <span id="calc-total-cost" class="stat-value font-mono">0 Kinah</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Expected Gross Revenue</span>
+                <span id="calc-expected-revenue" class="stat-value text-accent font-mono">0 Kinah</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Broker Commission</span>
+                <span id="calc-broker-tax" class="stat-value text-danger font-mono">-0 Kinah</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Net Expected Profit</span>
+                <span id="calc-net-profit" class="stat-value font-mono profit-val positive">0 Kinah</span>
+              </div>
+              <div class="stat-card">
+                <span class="stat-label">Return on Investment</span>
+                <div>
+                  <span id="calc-roi-percent" class="roi-pill positive">+0.0% ROI</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RNG Critical Proc Simulator -->
+          <div class="card-panel">
+            <h3>Crafting RNG & Critical Proc Simulator</h3>
+            <p class="section-subtitle">Test your luck against the Aion 2 crafting engine. Failed procs grant Pity Supply Tokens.</p>
+
+            <div class="sim-controls-row">
+              <button class="btn btn-primary sim-craft-btn" data-attempts="1">
+                <span>⚒️</span> Craft 1x Batch
+              </button>
+              <button class="btn btn-secondary sim-craft-btn" data-attempts="10">
+                <span>⚡</span> Simulate 10x
+              </button>
+              <button class="btn btn-secondary sim-craft-btn" data-attempts="100">
+                <span>🎲</span> Simulate 100x
+              </button>
+            </div>
+
+            <div id="sim-craft-stats" class="sim-stats-grid">
+              <!-- Dynamically populated by JS -->
+            </div>
+
+            <div id="sim-craft-log" class="craft-log-box">
+              <span class="empty-text" style="color: var(--text-muted); font-size: 0.85rem;">Run a craft simulation to inspect the results log.</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 2: GEAR ENCHANTMENT SIMULATOR
+         ========================================== -->
+    <section id="section-enchantment" class="app-section">
+      <div class="section-header">
+        <div>
+          <h2>Gear Enchantment & Amplification Simulator</h2>
+          <p class="section-subtitle">Simulate gear enchantment (+1 to +20) with realistic Aion 2 probability curves, supplements, and safety checkpoints.</p>
+        </div>
+        <div>
+          <button id="ench-reset-btn" class="btn btn-outline">
+            ↺ Reset Gear to +0
+          </button>
+        </div>
+      </div>
+
+      <div class="enchantment-layout">
+        <!-- Main Interactive Stage -->
+        <div class="gear-display-stage">
+          <div class="gear-visual-display tier-eternal" id="ench-visual-card">
+            <span class="gear-large-icon" id="ench-gear-icon">⚔️</span>
+            <div class="ench-level-bubble" id="ench-level-badge">+0</div>
+          </div>
+
+          <h3 class="gear-title-large" id="ench-gear-name">+0 Radiant Guardian Greatsword</h3>
+
+          <!-- Success Rate Bar -->
+          <div class="success-rate-container">
+            <div class="rate-header">
+              <span id="ench-rate-label">85.0% Success Chance (Next: +1)</span>
+              <span class="text-accent font-bold" id="ench-stone-cost">Cost: 350,000 Kinah</span>
+            </div>
+            <div class="rate-track">
+              <div class="rate-bar" id="ench-rate-bar" style="width: 85%;"></div>
+            </div>
+          </div>
+
+          <!-- Stat Bonuses Display -->
+          <div class="stat-bonuses-box" id="ench-stat-bonuses">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Main Action Buttons -->
+          <div class="enchant-actions-row">
+            <button id="ench-once-btn" class="btn btn-primary btn-large">
+              <span>✨</span> Enchant Gear (1 Attempt)
+            </button>
+          </div>
+        </div>
+
+        <!-- Sidebar: Configuration & Stats -->
+        <div class="card-panel">
+          <h3>Enchantment Settings</h3>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Gear Type</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <button class="btn btn-secondary gear-type-btn active" data-type="weapon" style="flex:1;">⚔️ Weapon</button>
+              <button class="btn btn-secondary gear-type-btn" data-type="armor" style="flex:1;">🛡️ Armor</button>
+              <button class="btn btn-secondary gear-type-btn" data-type="accessory" style="flex:1;">💍 Ring</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Equipment Rarity Tier</label>
+            <select id="ench-tier-select" class="form-select">
+              <option value="superior">Superior (Green)</option>
+              <option value="heroic">Heroic (Blue)</option>
+              <option value="fabled">Fabled (Gold)</option>
+              <option value="eternal" selected>Eternal (Purple)</option>
+              <option value="mythic">Mythic (Pink / Prismatic)</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Enchantment Supplement Boost</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+              <button class="btn btn-secondary supp-btn active" data-supp="none">None (+0%)</button>
+              <button class="btn btn-secondary supp-btn" data-supp="lesser">Lesser (+5%)</button>
+              <button class="btn btn-secondary supp-btn" data-supp="regular">Regular (+10%)</button>
+              <button class="btn btn-secondary supp-btn" data-supp="greater">Greater (+15%)</button>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.85rem;">
+              <input type="checkbox" id="ench-protection-check" checked />
+              <span>Enable Checkpoint Thresholds (+10 & +15 Protection)</span>
+            </label>
+          </div>
+
+          <!-- Auto Enchant to Target -->
+          <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <label class="form-label">Auto-Enchant Target</label>
+            <div style="display: flex; gap: 0.5rem;">
+              <select id="ench-auto-target" class="form-select" style="width: 120px;">
+                <option value="10">+10</option>
+                <option value="15" selected>+15</option>
+                <option value="20">+20</option>
+              </select>
+              <button id="ench-auto-btn" class="btn btn-secondary" style="flex: 1;">
+                Auto Run ➔
+              </button>
+            </div>
+          </div>
+
+          <!-- Session Statistics -->
+          <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <div class="stat-card" style="margin-bottom: 0.5rem;">
+              <span class="stat-label">Enchantment Stones Used</span>
+              <span id="ench-total-stones" class="stat-value font-mono">0</span>
+            </div>
+            <div class="stat-card" style="margin-bottom: 0.5rem;">
+              <span class="stat-label">Supplements Consumed</span>
+              <span id="ench-total-supps" class="stat-value font-mono">0</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">Total Kinah Investment</span>
+              <span id="ench-total-kinah" class="stat-value text-accent font-mono">0 Kinah</span>
+            </div>
+          </div>
+
+          <!-- History Log -->
+          <div style="margin-top: 1.5rem;">
+            <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted);">Attempt History</h4>
+            <div id="ench-history-log" class="ench-history-box">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Monte Carlo Batch Simulation -->
+      <div class="card-panel" style="margin-top: 1.5rem;">
+        <div class="section-header" style="margin-bottom: 1rem; padding-bottom: 0.5rem;">
+          <div>
+            <h3>500-Daeva Monte Carlo Probability Simulator</h3>
+            <p class="section-subtitle">Runs 500 virtual players through the RNG engine to calculate expected stones and Kinah needed.</p>
+          </div>
+          <div style="display: flex; gap: 0.5rem; align-items: center;">
+            <select id="ench-monte-target" class="filter-select" style="width: 130px;">
+              <option value="10">Target +10</option>
+              <option value="15" selected>Target +15</option>
+              <option value="20">Target +20</option>
+            </select>
+            <button id="ench-monte-carlo-btn" class="btn btn-primary">
+              <span>🎲</span> Run Monte Carlo Sim
+            </button>
+          </div>
+        </div>
+
+        <div id="monte-results-container">
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Click <strong>Run Monte Carlo Sim</strong> to simulate 500 attempts from +0 to target level and analyze the statistical distribution.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 3: MANASTONES & TRANSFER CRAFTING
+         ========================================== -->
+    <section id="section-manastones" class="app-section">
+      <div class="section-header">
+        <div>
+          <h2>Manastone Socketing & Transfer Crafting</h2>
+          <p class="section-subtitle">Socket stat gems into equipment slots and calculate gear substat transfer costs.</p>
+        </div>
+        <div class="view-mode-toggle">
+          <button id="ms-mode-modern" class="mode-toggle-btn active">Modern Safe Mode</button>
+          <button id="ms-mode-classic" class="mode-toggle-btn">Classic Strict Mode (Wipes All)</button>
+        </div>
+      </div>
+
+      <div class="crafting-layout">
+        <!-- Left: Socketing Board -->
+        <div class="card-panel">
+          <div class="section-header" style="margin-bottom: 0.5rem; padding-bottom: 0.5rem;">
+            <h3>Equipment Socket Board (6 Slots)</h3>
+            <button id="ms-reset-btn" class="btn btn-outline" style="font-size: 0.8rem;">Purge Sockets</button>
+          </div>
+
+          <div id="manastone-slots-grid" class="manastones-grid">
+            <!-- Dynamically populated 6 slots -->
+          </div>
+
+          <!-- Socketing Controls -->
+          <div class="craft-controls-grid" style="margin-top: 1rem;">
+            <div class="ctrl-group">
+              <label class="form-label">Manastone Stat Type</label>
+              <select id="ms-stone-type" class="form-select">
+                <option value="crit_strike">Critical Strike (+17 / +37)</option>
+                <option value="attack">Physical Attack (+5 / +11)</option>
+                <option value="magic_boost">Magic Boost (+27 / +59)</option>
+                <option value="max_hp">Max Health HP (+95 / +209)</option>
+                <option value="magical_acc">Magical Accuracy (+14 / +30)</option>
+                <option value="block">Shield Block (+27 / +59)</option>
+                <option value="accuracy">Physical Accuracy (+27 / +59)</option>
+              </select>
+            </div>
+
+            <div class="ctrl-group">
+              <label class="form-label">Manastone Quality Tier</label>
+              <select id="ms-stone-tier" class="form-select">
+                <option value="superior">Superior (Green)</option>
+                <option value="heroic" selected>Heroic (Blue)</option>
+                <option value="fabled">Fabled (Gold)</option>
+                <option value="eternal">Eternal (Purple)</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.75rem; margin-top: 1rem;">
+            <button id="ms-socket-btn" class="btn btn-primary" style="flex: 1;">
+              <span>💎</span> Socket Manastone
+            </button>
+            <button id="ms-auto-socket-btn" class="btn btn-secondary">
+              <span>⚡</span> Auto-Socket All Slots
+            </button>
+          </div>
+
+          <!-- Total Socketed Stats -->
+          <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <h4 style="font-size: 0.9rem; margin-bottom: 0.75rem; color: var(--text-muted);">Accumulated Socket Stats</h4>
+            <div id="ms-accumulated-stats" style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Transfer Crafting Sub-tool -->
+        <div class="card-panel">
+          <h3>Aion 2 Transfer Crafting</h3>
+          <p class="section-subtitle">Preserve gear amplification and substats when upgrading to the next tier.</p>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Source Gear Amplification Level</label>
+            <input type="range" id="transfer-source-lvl" class="slider-input" min="0" max="20" value="15" />
+            <span class="stat-sub">Source Level: <strong>+15</strong></span>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label class="form-label">Target Equipment Quality</label>
+            <select id="transfer-target-tier" class="form-select">
+              <option value="heroic">Upgrade to Heroic</option>
+              <option value="fabled">Upgrade to Fabled</option>
+              <option value="eternal" selected>Upgrade to Eternal</option>
+              <option value="mythic">Upgrade to Mythic</option>
+            </select>
+          </div>
+
+          <div class="form-group" style="margin-top: 1rem;">
+            <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; font-size: 0.85rem;">
+              <input type="checkbox" id="transfer-preserve-substats" checked />
+              <span>Preserve All Custom Substat Rolls</span>
+            </label>
+          </div>
+
+          <div id="transfer-results-card" style="margin-top: 1.25rem;">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Attempt log -->
+          <div style="margin-top: 1.5rem; padding-top: 1rem; border-top: 1px solid var(--border-color);">
+            <h4 style="font-size: 0.9rem; margin-bottom: 0.5rem; color: var(--text-muted);">Socketing Log</h4>
+            <div id="ms-history-log" class="ench-history-box" style="max-height: 160px;">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 4: TIMERS & WORLD BOSSES
+         ========================================== -->
+    <section id="section-timers" class="app-section">
+      <div class="section-header">
+        <div>
+          <h2>World Timers & Gathering Node Tracker</h2>
+          <p class="section-subtitle">Real-time server resets, dimensional rift incursions, world boss windows, and gathering respawns.</p>
+        </div>
+        <div>
+          <button id="add-timer-btn" class="btn btn-secondary">
+            <span>⏱️</span> Add Custom Farm Timer
+          </button>
+        </div>
+      </div>
+
+      <!-- Top Reset Clock Banner -->
+      <div class="timers-header-bar">
+        <div class="timer-hero-card">
+          <span class="timer-hero-icon">🌅</span>
+          <div class="timer-hero-body">
+            <span class="timer-hero-label">Daily Quest / Dungeon Reset</span>
+            <span id="timer-daily-reset" class="timer-hero-clock font-mono">00:00:00</span>
+            <span class="stat-sub">Resets at 09:00 UTC daily</span>
+          </div>
+        </div>
+
+        <div class="timer-hero-card">
+          <span class="timer-hero-icon">📅</span>
+          <div class="timer-hero-body">
+            <span class="timer-hero-label">Weekly Raid / Abyss Reset</span>
+            <span id="timer-weekly-reset" class="timer-hero-clock font-mono">00:00:00</span>
+            <span class="stat-sub">Resets on Wednesdays 09:00 UTC</span>
+          </div>
+        </div>
+
+        <div class="timer-hero-card">
+          <span class="timer-hero-icon">🌌</span>
+          <div class="timer-hero-body">
+            <span id="rift-status-badge" class="status-pill active-rift">DIMENSIONAL RIFT OPEN</span>
+            <span id="rift-time-left" class="timer-hero-clock font-mono">00:00:00</span>
+            <span class="stat-sub">Elysea ⇄ Asmodae Invasions</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- World Boss Schedule Grid -->
+      <h3 style="margin-bottom: 1rem; font-size: 1.3rem;">World Raid Boss Respawn Windows</h3>
+      <div id="world-bosses-grid" class="world-bosses-grid" style="margin-bottom: 2.5rem;">
+        <!-- Dynamically populated by JS -->
+      </div>
+
+      <!-- Essence Gathering Node Respawns -->
+      <h3 style="margin-bottom: 1rem; font-size: 1.3rem;">Essence Extraction Node Respawn Timers</h3>
+      <div id="custom-timers-grid" class="custom-timers-grid">
+        <!-- Dynamically populated by JS -->
+      </div>
+    </section>
+
+    <!-- ==========================================
+         SECTION 5: CRAFTING GUIDE & PROFICIENCY
+         ========================================== -->
+    <section id="section-guide" class="app-section">
+      <div class="section-header">
+        <div>
+          <h2>Aion 2 Crafting & Progression Guide</h2>
+          <p class="section-subtitle">Essential mechanics, leveling tips, and Best-in-Slot (BIS) investment strategies.</p>
+        </div>
+      </div>
+
+      <div class="guide-grid">
+        <div class="guide-card">
+          <h3><span>⚒️</span> Proficiency Ranks</h3>
+          <ul class="guide-list">
+            <li><strong>Novice (Lv. 1–50):</strong> Focuses on foundational gear, basic iron/steel metallurgy, and standard restorative consumables.</li>
+            <li><strong>Promotion Quest (Lv. 50):</strong> At level 50, visit the Crafting Guild Master in Sanctum or Pandaemonium to undergo the Professional Daeva exam.</li>
+            <li><strong>Professional (Lv. 51–100):</strong> Unlocks high-tier Titanium, Adamantium, Orichalcum, and Celestial recipes. Grants access to Transfer Crafting.</li>
+            <li><strong>Proficiency Bonus:</strong> Having proficiency significantly above the recipe requirement boosts your Critical Proc (Noble) chance by up to +20%!</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <h3><span>🌿</span> Essence Extraction (Gathering)</h3>
+          <ul class="guide-list">
+            <li><strong>Universal Gathering:</strong> Essence Extraction combines mining, foraging, and organic harvesting into a single cohesive skill.</li>
+            <li><strong>Aethertapping:</strong> Harvest floating Aether crystals in high-altitude flight zones and the Reshanta Abyss.</li>
+            <li><strong>Rare Node Weather:</strong> Certain mythical ores and flowers (e.g., Dragon Flowers, Tears of Atreia) only bloom during celestial atmospheric shifts.</li>
+            <li><strong>Flight Time Buffs:</strong> Always keep Flight Recovery Potions and Aerial Speed food active when harvesting Abyss Aether swarms.</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <h3><span>✨</span> Critical Procs & Pity Tokens</h3>
+          <ul class="guide-list">
+            <li><strong>Noble & Shining Procs:</strong> Crafted items have a chance to proc into enhanced "Noble" or "Shining" variants with superior stats, extra socket slots, and PvP damage multipliers.</li>
+            <li><strong>Supply Request System:</strong> Normal (non-proc) crafts are never a total waste. They yield Pity Supply Tokens that can be exchanged for guaranteed masterwork catalysts.</li>
+            <li><strong>Broker Market Dynamics:</strong> Selling intermediate refined ingots and elixirs often produces more reliable daily Kinah margins than gamble-crafting high-tier weapons.</li>
+          </ul>
+        </div>
+
+        <div class="guide-card">
+          <h3><span>💎</span> Transfer Crafting Mechanics</h3>
+          <ul class="guide-list">
+            <li><strong>Gear Substat Retention:</strong> When upgrading to a higher gear tier, Transfer Crafting allows you to carry over your customized substats.</li>
+            <li><strong>Amplification Retention:</strong> A +15 gear item retains +13 or +14 amplification when transferred, saving massive quantities of enchantment stones.</li>
+            <li><strong>Catalysts:</strong> Stockpile Transfer Catalysts from dungeon breakdown and world boss drops.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Add Custom Recipe Modal -->
+  <div id="add-recipe-modal" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>Add Custom Recipe</h3>
+        <button id="close-add-recipe-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <form id="custom-recipe-form">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Recipe / Item Name</label>
+            <input type="text" id="cr-name" class="form-input" required placeholder="e.g. Balaur Slayer Halberd" />
+          </div>
+
+          <div class="form-row" style="display: flex; gap: 0.75rem;">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">Profession</label>
+              <select id="cr-prof" class="form-select">
+                <option value="blacksmithing">Blacksmithing</option>
+                <option value="armorsmithing">Armorsmithing</option>
+                <option value="handicrafting">Handicrafting</option>
+                <option value="alchemy">Alchemy</option>
+                <option value="cooking">Cooking</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">Required Level</label>
+              <input type="number" id="cr-level" class="form-input" min="1" max="100" value="75" required />
+            </div>
+          </div>
+
+          <div class="form-row" style="display: flex; gap: 0.75rem;">
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">Tier</label>
+              <select id="cr-tier" class="form-select">
+                <option value="superior">Superior (Green)</option>
+                <option value="heroic">Heroic (Blue)</option>
+                <option value="fabled" selected>Fabled (Gold)</option>
+                <option value="eternal">Eternal (Purple)</option>
+                <option value="mythic">Mythic</option>
+              </select>
+            </div>
+            <div class="form-group" style="flex: 1;">
+              <label class="form-label">Base Sell Price (Kinah)</label>
+              <input type="number" id="cr-price" class="form-input" min="100" value="350000" required />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Ingredients (format: id: count, id: count)</label>
+            <input type="text" id="cr-materials" class="form-input" placeholder="titanium_ingot: 10, radiant_flux: 4" required />
+            <span class="stat-sub">Valid IDs: raw_iron_ore, titanium_ingot, pure_aether_core, balaur_scale, etc.</span>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">Description / Stats</label>
+            <textarea id="cr-desc" class="form-textarea" placeholder="Crafted masterwork equipment..."></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save Recipe</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Data Backup / Import Modal -->
+  <div id="data-modal" class="modal-overlay">
+    <div class="modal-window">
+      <div class="modal-header">
+        <h3>Backup & Data Sync</h3>
+        <button id="close-data-modal-btn" class="modal-close-btn">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size: 0.85rem; color: var(--text-muted);">
+          Export your custom recipes, modified material prices, and timer settings to JSON or import from another device.
+        </p>
+        <textarea id="data-textarea" class="form-textarea" style="height: 180px;"></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="export-data-btn" class="btn btn-secondary">Copy to Clipboard</button>
+        <button id="import-data-btn" class="btn btn-primary">Import JSON</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-content">
+      <p>
+        <strong>Aion 2 Helper</strong> — Crafted for Daevas across Atreia. Built for GitHub Pages.
+      </p>
+      <div class="footer-links">
+        <a href="https://github.com/xyligo/aion2-helper" target="_blank" rel="noopener">GitHub Repository</a>
+        <span>•</span>
+        <a href="#crafting">Crafting Tools</a>
+        <span>•</span>
+        <a href="#enchantment">Enchantment Sim</a>
+        <span>•</span>
+        <a href="#timers">World Timers</a>
+      </div>
+      <p style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+        Aion & Aion 2 are registered trademarks of NCSoft Corporation. This fan-made companion tool is not affiliated with NCSoft.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Application Entry Point (ES Modules) -->
+  <script type="module" src="./js/app.js"></script>
+</body>
+</html>
